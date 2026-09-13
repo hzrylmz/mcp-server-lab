@@ -1,0 +1,21 @@
+{
+  "name": "mcp-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "type": "module",
+  "dependencies": {
+    "@modelcontextprotocol/client": "^2.0.0",
+    "@modelcontextprotocol/server": "^2.0.0",
+    "openai": "^6.49.0",
+    "playwright": "^1.63.0",
+    "tsx": "^4.23.13",
+    "zod": "^4.6.4"
+  }
+}

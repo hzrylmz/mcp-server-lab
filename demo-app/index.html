@@ -1,0 +1,1942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>AutoMarket — Vehicle Marketplace</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #f5f7fa;
+      --surface: #ffffff;
+      --surface-dark: #111827;
+      --text: #111827;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --success: #059669;
+      --danger: #dc2626;
+      --warning: #d97706;
+      --radius: 14px;
+      --shadow: 0 8px 30px rgba(15, 23, 42, 0.08);
+    }
+
+    body {
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    /* =========================
+       HEADER
+    ========================== */
+
+    .header {
+      background: var(--surface-dark);
+      color: white;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 21px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    .logo-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .nav a {
+      color: #d1d5db;
+      text-decoration: none;
+      font-size: 14px;
+      transition: 0.2s;
+    }
+
+    .nav a:hover {
+      color: white;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .icon-button {
+      border: 1px solid #374151;
+      background: transparent;
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      transition: 0.2s;
+    }
+
+    .icon-button:hover {
+      background: #1f2937;
+    }
+
+    .avatar {
+      width: 38px;
+      height: 38px;
+      background: #374151;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    /* =========================
+       HERO
+    ========================== */
+
+    .hero {
+      background:
+        radial-gradient(circle at 80% 20%, rgba(37, 99, 235, 0.22), transparent 35%),
+        linear-gradient(135deg, #0f172a, #111827);
+      color: white;
+      padding: 64px 48px 80px;
+    }
+
+    .hero-content {
+      max-width: 1250px;
+      margin: auto;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      font-size: 12px;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      font-size: 46px;
+      line-height: 1.1;
+      max-width: 700px;
+      letter-spacing: -1.5px;
+      margin-bottom: 16px;
+    }
+
+    .hero p {
+      color: #cbd5e1;
+      max-width: 650px;
+      margin-bottom: 34px;
+      font-size: 16px;
+    }
+
+    /* =========================
+       SEARCH
+    ========================== */
+
+    .search-panel {
+      max-width: 1250px;
+      margin: -32px auto 0;
+      position: relative;
+      z-index: 10;
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 24px;
+    }
+
+    .search-row {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr auto;
+      gap: 12px;
+    }
+
+    .field {
+      position: relative;
+    }
+
+    .field label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+
+    .field input,
+    .field select {
+      width: 100%;
+      height: 46px;
+      padding: 0 13px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: #fff;
+      color: var(--text);
+      outline: none;
+    }
+
+    .field input:focus,
+    .field select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+    }
+
+    .search-button {
+      height: 46px;
+      padding: 0 22px;
+      border: none;
+      border-radius: 9px;
+      background: var(--primary);
+      color: white;
+      font-weight: 700;
+      margin-top: 20px;
+      transition: 0.2s;
+    }
+
+    .search-button:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+    }
+
+    /* =========================
+       MAIN
+    ========================== */
+
+    .container {
+      max-width: 1250px;
+      margin: auto;
+      padding: 48px 24px 80px;
+    }
+
+    .toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+
+    .result-info h2 {
+      font-size: 22px;
+      letter-spacing: -0.5px;
+    }
+
+    .result-info span {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .toolbar-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sort-select {
+      height: 40px;
+      padding: 0 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: white;
+    }
+
+    /* =========================
+       VEHICLE GRID
+    ========================== */
+
+    .vehicle-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .vehicle-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: 0.25s;
+      position: relative;
+    }
+
+    .vehicle-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow);
+    }
+
+    .vehicle-image {
+      height: 190px;
+      background: linear-gradient(135deg, #e5e7eb, #cbd5e1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 70px;
+      position: relative;
+    }
+
+    .vehicle-badge {
+      position: absolute;
+      left: 14px;
+      top: 14px;
+      background: white;
+      color: var(--text);
+      padding: 5px 9px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .favorite-button {
+      position: absolute;
+      right: 14px;
+      top: 14px;
+      width: 34px;
+      height: 34px;
+      border: none;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.95);
+      font-size: 17px;
+      transition: 0.2s;
+    }
+
+    .favorite-button:hover {
+      transform: scale(1.08);
+    }
+
+    .vehicle-body {
+      padding: 20px;
+    }
+
+    .vehicle-brand {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+    }
+
+    .vehicle-title {
+      font-size: 20px;
+      margin-top: 3px;
+      letter-spacing: -0.4px;
+    }
+
+    .vehicle-meta {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 13px 0;
+    }
+
+    .meta-item {
+      font-size: 12px;
+      color: var(--muted);
+      padding-right: 10px;
+      border-right: 1px solid var(--border);
+    }
+
+    .meta-item:last-child {
+      border-right: none;
+    }
+
+    .vehicle-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .price {
+      font-size: 19px;
+      font-weight: 800;
+    }
+
+    .price small {
+      display: block;
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--muted);
+    }
+
+    .details-button {
+      border: none;
+      background: #eff6ff;
+      color: var(--primary);
+      padding: 9px 13px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      transition: 0.2s;
+    }
+
+    .details-button:hover {
+      background: #dbeafe;
+    }
+
+    /* =========================
+       PAGINATION
+    ========================== */
+
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 42px;
+    }
+
+    .page-button {
+      width: 38px;
+      height: 38px;
+      border: 1px solid var(--border);
+      background: white;
+      border-radius: 8px;
+      font-size: 13px;
+    }
+
+    .page-button.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    /* =========================
+       MODAL
+    ========================== */
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.65);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 500;
+      padding: 20px;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal {
+      width: min(700px, 100%);
+      background: white;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 25px 80px rgba(0,0,0,0.25);
+    }
+
+    .modal-header {
+      padding: 22px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .modal-header h2 {
+      font-size: 21px;
+    }
+
+    .close-modal {
+      border: none;
+      background: #f3f4f6;
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      font-size: 18px;
+    }
+
+    .modal-content {
+      padding: 24px;
+    }
+
+    .modal-image {
+      height: 220px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 90px;
+      margin-bottom: 20px;
+    }
+
+    .spec-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .spec {
+      background: #f8fafc;
+      border-radius: 10px;
+      padding: 12px;
+    }
+
+    .spec span {
+      display: block;
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 3px;
+    }
+
+    .spec strong {
+      font-size: 13px;
+    }
+
+    /* =========================
+       TOAST
+    ========================== */
+
+    .toast {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      background: #111827;
+      color: white;
+      padding: 14px 18px;
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      transform: translateY(120px);
+      opacity: 0;
+      transition: 0.3s;
+      z-index: 1000;
+      font-size: 13px;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* =========================
+       RESPONSIVE
+    ========================== */
+
+    @media (max-width: 1000px) {
+      .search-row {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .vehicle-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .nav {
+        display: none;
+      }
+    }
+
+    @media (max-width: 650px) {
+      .header {
+        padding: 0 20px;
+      }
+
+      .hero {
+        padding: 45px 20px 65px;
+      }
+
+      .hero h1 {
+        font-size: 34px;
+      }
+
+      .search-panel {
+        margin-left: 16px;
+        margin-right: 16px;
+      }
+
+      .search-row {
+        grid-template-columns: 1fr;
+      }
+
+      .vehicle-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .toolbar {
+        align-items: flex-start;
+        gap: 15px;
+        flex-direction: column;
+      }
+
+      .spec-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- =========================
+       HEADER
+  ========================== -->
+
+  <header class="header">
+
+    <div class="logo">
+      <div class="logo-icon">🚗</div>
+      <span>AutoMarket</span>
+    </div>
+
+    <nav class="nav">
+      <a href="#">Vehicles</a>
+      <a href="#">Sell Your Car</a>
+      <a href="#">Financing</a>
+      <a href="#">About Us</a>
+    </nav>
+
+    <div class="header-actions">
+      <button
+        class="icon-button"
+        id="notifications-button"
+        aria-label="Notifications">
+        🔔
+      </button>
+
+      <div class="avatar" id="user-avatar">
+        HY
+      </div>
+    </div>
+
+  </header>
+
+
+  <!-- =========================
+       HERO
+  ========================== -->
+
+  <section class="hero">
+
+    <div class="hero-content">
+
+      <div class="hero-badge">
+        ✦ Trusted vehicle marketplace
+      </div>
+
+      <h1>
+        Find your next car with confidence.
+      </h1>
+
+      <p>
+        Explore thousands of verified vehicles from trusted dealers.
+        Compare models, specifications and prices in one place.
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       SEARCH PANEL
+  ========================== -->
+
+  <section class="search-panel">
+
+    <div class="search-row">
+
+      <div class="field">
+        <label for="search-input">Search</label>
+
+        <input
+          id="search-input"
+          name="vehicle-search"
+          type="text"
+          placeholder="BMW 320i, Mercedes C200..."
+        />
+      </div>
+
+      <div class="field">
+        <label for="brand-select">Brand</label>
+
+        <select
+          id="brand-select"
+          data-testid="brand-selector">
+
+          <option value="all">All brands</option>
+          <option value="BMW">BMW</option>
+          <option value="Mercedes">Mercedes-Benz</option>
+          <option value="Audi">Audi</option>
+          <option value="Volvo">Volvo</option>
+
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="year-select">Year</label>
+
+        <select
+          id="year-select"
+          data-testid="year-filter">
+
+          <option value="all">All years</option>
+          <option value="2024">2024</option>
+          <option value="2023">2023</option>
+          <option value="2022">2022</option>
+
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="transmission-select">Transmission</label>
+
+        <select
+          id="transmission-select"
+          data-testid="transmission-filter">
+
+          <option value="all">Any</option>
+          <option value="Automatic">Automatic</option>
+          <option value="Manual">Manual</option>
+
+        </select>
+      </div>
+
+      <button
+        id="search-button"
+        data-testid="vehicle-search-button"
+        class="search-button">
+
+        Search Vehicles
+
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       MAIN
+  ========================== -->
+
+  <main class="container">
+
+    <div class="toolbar">
+
+      <div class="result-info">
+
+        <h2 id="result-title">
+          Available vehicles
+        </h2>
+
+        <span id="result-count">
+          8 vehicles found
+        </span>
+
+      </div>
+
+      <div class="toolbar-right">
+
+        <label for="sort-select" style="font-size: 12px; color: #6b7280;">
+          Sort by
+        </label>
+
+        <select
+          id="sort-select"
+          class="sort-select"
+          data-testid="sort-select">
+
+          <option value="recommended">Recommended</option>
+          <option value="price-low">Price: Low to High</option>
+          <option value="price-high">Price: High to Low</option>
+          <option value="year-new">Newest</option>
+
+        </select>
+
+      </div>
+
+    </div>
+
+
+    <!-- =========================
+         VEHICLE GRID
+    ========================== -->
+
+    <section
+      id="vehicle-grid"
+      class="vehicle-grid"
+      data-testid="vehicle-grid">
+
+
+      <!-- BMW 320i -->
+
+      <article
+        class="vehicle-card"
+        data-vehicle-id="bmw-320i-2023"
+        data-brand="BMW"
+        data-year="2023"
+        data-transmission="Automatic"
+        data-price="42500">
+
+        <div class="vehicle-image">
+
+          <span class="vehicle-badge">
+            Featured
+          </span>
+
+          <button
+            class="favorite-button"
+            data-testid="favorite-button"
+            aria-label="Add BMW 320i to favorites">
+
+            ♡
+
+          </button>
+
+          🚘
+
+        </div>
+
+        <div class="vehicle-body">
+
+          <div class="vehicle-brand">
+            BMW
+          </div>
+
+          <h3
+            class="vehicle-title"
+            data-testid="vehicle-title">
+
+            320i Sport Line
+
+          </h3>
+
+          <div class="vehicle-meta">
+
+            <span class="meta-item">
+              2023
+            </span>
+
+            <span class="meta-item">
+              1.5L
+            </span>
+
+            <span class="meta-item">
+              Automatic
+            </span>
+
+            <span class="meta-item">
+              38,200 km
+            </span>
+
+          </div>
+
+          <div class="vehicle-footer">
+
+            <div class="price">
+              €42,500
+              <small>Estimated monthly €720</small>
+            </div>
+
+            <button
+              class="details-button"
+              data-action="view-details"
+              data-vehicle="bmw-320i-2023">
+
+              View Details
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </article>
+
+
+      <!-- BMW 520i -->
+
+      <article
+        class="vehicle-card"
+        data-vehicle-id="bmw-520i-2024"
+        data-brand="BMW"
+        data-year="2024"
+        data-transmission="Automatic"
+        data-price="57900">
+
+        <div class="vehicle-image">
+
+          <span class="vehicle-badge">
+            New
+          </span>
+
+          <button
+            class="favorite-button"
+            aria-label="Add BMW 520i to favorites">
+
+            ♡
+
+          </button>
+
+          🚙
+
+        </div>
+
+        <div class="vehicle-body">
+
+          <div class="vehicle-brand">
+            BMW
+          </div>
+
+          <h3 class="vehicle-title">
+            520i M Sport
+          </h3>
+
+          <div class="vehicle-meta">
+
+            <span class="meta-item">2024</span>
+            <span class="meta-item">1.6L</span>
+            <span class="meta-item">Automatic</span>
+            <span class="meta-item">14,600 km</span>
+
+          </div>
+
+          <div class="vehicle-footer">
+
+            <div class="price">
+              €57,900
+              <small>Estimated monthly €980</small>
+            </div>
+
+            <button
+              class="details-button"
+              data-action="view-details"
+              data-vehicle="bmw-520i-2024">
+
+              View Details
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </article>
+
+
+      <!-- BMW X3 -->
+
+      <article
+        class="vehicle-card"
+        data-vehicle-id="bmw-x3-2023"
+        data-brand="BMW"
+        data-year="2023"
+        data-transmission="Automatic"
+        data-price="63200">
+
+        <div class="vehicle-image">
+
+          <span class="vehicle-badge">
+            Popular
+          </span>
+
+          <button
+            class="favorite-button"
+            aria-label="Add BMW X3 to favorites">
+
+            ♡
+
+          </button>
+
+          🚙
+
+        </div>
+
+        <div class="vehicle-body">
+
+          <div class="vehicle-brand">
+            BMW
+          </div>
+
+          <h3 class="vehicle-title">
+            X3 xDrive20i
+          </h3>
+
+          <div class="vehicle-meta">
+
+            <span class="meta-item">2023</span>
+            <span class="meta-item">2.0L</span>
+            <span class="meta-item">Automatic</span>
+            <span class="meta-item">27,900 km</span>
+
+          </div>
+
+          <div class="vehicle-footer">
+
+            <div class="price">
+              €63,200
+              <small>Estimated monthly €1,070</small>
+            </div>
+
+            <button
+              class="details-button"
+              data-action="view-details"
+              data-vehicle="bmw-x3-2023">
+
+              View Details
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </article>
+
+
+      <!-- Mercedes C200 -->
+
+      <article
+        class="vehicle-card"
+        data-vehicle-id="mercedes-c200-2023"
+        data-brand="Mercedes"
+        data-year="2023"
+        data-transmission="Automatic"
+        data-price="51900">
+
+        <div class="vehicle-image">
+
+          <span class="vehicle-badge">
+            Premium
+          </span>
+
+          <button
+            class="favorite-button"
+            aria-label="Add Mercedes C200 to favorites">
+
+            ♡
+
+          </button>
+
+          🚘
+
+        </div>
+
+        <div class="vehicle-body">
+
+          <div class="vehicle-brand">
+            Mercedes-Benz
+          </div>
+
+          <h3 class="vehicle-title">
+            C200 AMG Line
+          </h3>
+
+          <div class="vehicle-meta">
+
+            <span class="meta-item">2023</span>
+            <span class="meta-item">1.5L</span>
+            <span class="meta-item">Automatic</span>
+            <span class="meta-item">21,300 km</span>
+
+          </div>
+
+          <div class="vehicle-footer">
+
+            <div class="price">
+              €51,900
+              <small>Estimated monthly €880</small>
+            </div>
+
+            <button
+              class="details-button"
+              data-action="view-details"
+              data-vehicle="mercedes-c200-2023">
+
+              View Details
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </article>
+
+
+      <!-- Audi A4 -->
+
+      <article
+        class="vehicle-card"
+        data-vehicle-id="audi-a4-2022"
+        data-brand="Audi"
+        data-year="2022"
+        data-transmission="Automatic"
+        data-price="38900">
+
+        <div class="vehicle-image">
+
+          <button
+            class="favorite-button"
+            aria-label="Add Audi A4 to favorites">
+
+            ♡
+
+          </button>
+
+          🚗
+
+        </div>
+
+        <div class="vehicle-body">
+
+          <div class="vehicle-brand">
+            Audi
+          </div>
+
+          <h3 class="vehicle-title">
+            A4 S Line
+          </h3>
+
+          <div class="vehicle-meta">
+
+            <span class="meta-item">2022</span>
+            <span class="meta-item">2.0L</span>
+            <span class="meta-item">Automatic</span>
+            <span class="meta-item">45,700 km</span>
+
+          </div>
+
+          <div class="vehicle-footer">
+
+            <div class="price">
+              €38,900
+              <small>Estimated monthly €660</small>
+            </div>
+
+            <button
+              class="details-button"
+              data-action="view-details"
+              data-vehicle="audi-a4-2022">
+
+              View Details
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </article>
+
+
+      <!-- Volvo XC60 -->
+
+      <article
+        class="vehicle-card"
+        data-vehicle-id="volvo-xc60-2024"
+        data-brand="Volvo"
+        data-year="2024"
+        data-transmission="Automatic"
+        data-price="61200">
+
+        <div class="vehicle-image">
+
+          <span class="vehicle-badge">
+            New
+          </span>
+
+          <button
+            class="favorite-button"
+            aria-label="Add Volvo XC60 to favorites">
+
+            ♡
+
+          </button>
+
+          🚙
+
+        </div>
+
+        <div class="vehicle-body">
+
+          <div class="vehicle-brand">
+            Volvo
+          </div>
+
+          <h3 class="vehicle-title">
+            XC60 B5 Ultimate
+          </h3>
+
+          <div class="vehicle-meta">
+
+            <span class="meta-item">2024</span>
+            <span class="meta-item">2.0L</span>
+            <span class="meta-item">Automatic</span>
+            <span class="meta-item">8,200 km</span>
+
+          </div>
+
+          <div class="vehicle-footer">
+
+            <div class="price">
+              €61,200
+              <small>Estimated monthly €1,040</small>
+            </div>
+
+            <button
+              class="details-button"
+              data-action="view-details"
+              data-vehicle="volvo-xc60-2024">
+
+              View Details
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </article>
+
+
+      <!-- BMW 330e -->
+
+      <article
+        class="vehicle-card"
+        data-vehicle-id="bmw-330e-2022"
+        data-brand="BMW"
+        data-year="2022"
+        data-transmission="Automatic"
+        data-price="46700">
+
+        <div class="vehicle-image">
+
+          <button
+            class="favorite-button"
+            aria-label="Add BMW 330e to favorites">
+
+            ♡
+
+          </button>
+
+          🚘
+
+        </div>
+
+        <div class="vehicle-body">
+
+          <div class="vehicle-brand">
+            BMW
+          </div>
+
+          <h3 class="vehicle-title">
+            330e M Sport
+          </h3>
+
+          <div class="vehicle-meta">
+
+            <span class="meta-item">2022</span>
+            <span class="meta-item">2.0L Hybrid</span>
+            <span class="meta-item">Automatic</span>
+            <span class="meta-item">32,500 km</span>
+
+          </div>
+
+          <div class="vehicle-footer">
+
+            <div class="price">
+              €46,700
+              <small>Estimated monthly €790</small>
+            </div>
+
+            <button
+              class="details-button"
+              data-action="view-details"
+              data-vehicle="bmw-330e-2022">
+
+              View Details
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </article>
+
+
+      <!-- Mercedes GLC -->
+
+      <article
+        class="vehicle-card"
+        data-vehicle-id="mercedes-glc-2024"
+        data-brand="Mercedes"
+        data-year="2024"
+        data-transmission="Automatic"
+        data-price="74900">
+
+        <div class="vehicle-image">
+
+          <span class="vehicle-badge">
+            Premium
+          </span>
+
+          <button
+            class="favorite-button"
+            aria-label="Add Mercedes GLC to favorites">
+
+            ♡
+
+          </button>
+
+          🚙
+
+        </div>
+
+        <div class="vehicle-body">
+
+          <div class="vehicle-brand">
+            Mercedes-Benz
+          </div>
+
+          <h3 class="vehicle-title">
+            GLC 220d AMG
+          </h3>
+
+          <div class="vehicle-meta">
+
+            <span class="meta-item">2024</span>
+            <span class="meta-item">2.0L</span>
+            <span class="meta-item">Automatic</span>
+            <span class="meta-item">6,800 km</span>
+
+          </div>
+
+          <div class="vehicle-footer">
+
+            <div class="price">
+              €74,900
+              <small>Estimated monthly €1,270</small>
+            </div>
+
+            <button
+              class="details-button"
+              data-action="view-details"
+              data-vehicle="mercedes-glc-2024">
+
+              View Details
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </article>
+
+    </section>
+
+
+    <!-- =========================
+         PAGINATION
+    ========================== -->
+
+    <div
+      class="pagination"
+      data-testid="pagination">
+
+      <button
+        class="page-button"
+        aria-label="Previous page">
+        ‹
+      </button>
+
+      <button
+        class="page-button active"
+        data-page="1">
+        1
+      </button>
+
+      <button
+        class="page-button"
+        data-page="2">
+        2
+      </button>
+
+      <button
+        class="page-button"
+        data-page="3">
+        3
+      </button>
+
+      <button
+        class="page-button"
+        data-page="4">
+        4
+      </button>
+
+      <button
+        class="page-button"
+        aria-label="Next page">
+        ›
+      </button>
+
+    </div>
+
+  </main>
+
+
+  <!-- =========================
+       DETAIL MODAL
+  ========================== -->
+
+  <div
+    id="vehicle-modal"
+    class="modal-overlay"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modal-title">
+
+    <div class="modal">
+
+      <div class="modal-header">
+
+        <h2 id="modal-title">
+          Vehicle Details
+        </h2>
+
+        <button
+          id="close-modal"
+          class="close-modal"
+          aria-label="Close vehicle details">
+
+          ×
+
+        </button>
+
+      </div>
+
+      <div class="modal-content">
+
+        <div class="modal-image">
+          🚘
+        </div>
+
+        <div class="spec-grid">
+
+          <div class="spec">
+            <span>Brand</span>
+            <strong id="modal-brand">BMW</strong>
+          </div>
+
+          <div class="spec">
+            <span>Model</span>
+            <strong id="modal-model">320i Sport Line</strong>
+          </div>
+
+          <div class="spec">
+            <span>Year</span>
+            <strong id="modal-year">2023</strong>
+          </div>
+
+          <div class="spec">
+            <span>Engine</span>
+            <strong id="modal-engine">1.5L</strong>
+          </div>
+
+          <div class="spec">
+            <span>Transmission</span>
+            <strong id="modal-transmission">Automatic</strong>
+          </div>
+
+          <div class="spec">
+            <span>Mileage</span>
+            <strong id="modal-mileage">38,200 km</strong>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================
+       TOAST
+  ========================== -->
+
+  <div
+    id="toast"
+    class="toast"
+    role="status"
+    aria-live="polite">
+
+    Vehicle added to favorites.
+
+  </div>
+
+
+  <!-- =========================
+       JAVASCRIPT
+  ========================== -->
+
+  <script>
+
+    /*
+     * Vehicle data
+     */
+
+    const vehicles = {
+
+      "bmw-320i-2023": {
+        brand: "BMW",
+        model: "320i Sport Line",
+        year: "2023",
+        engine: "1.5L",
+        transmission: "Automatic",
+        mileage: "38,200 km"
+      },
+
+      "bmw-520i-2024": {
+        brand: "BMW",
+        model: "520i M Sport",
+        year: "2024",
+        engine: "1.6L",
+        transmission: "Automatic",
+        mileage: "14,600 km"
+      },
+
+      "bmw-x3-2023": {
+        brand: "BMW",
+        model: "X3 xDrive20i",
+        year: "2023",
+        engine: "2.0L",
+        transmission: "Automatic",
+        mileage: "27,900 km"
+      },
+
+      "mercedes-c200-2023": {
+        brand: "Mercedes-Benz",
+        model: "C200 AMG Line",
+        year: "2023",
+        engine: "1.5L",
+        transmission: "Automatic",
+        mileage: "21,300 km"
+      },
+
+      "audi-a4-2022": {
+        brand: "Audi",
+        model: "A4 S Line",
+        year: "2022",
+        engine: "2.0L",
+        transmission: "Automatic",
+        mileage: "45,700 km"
+      },
+
+      "volvo-xc60-2024": {
+        brand: "Volvo",
+        model: "XC60 B5 Ultimate",
+        year: "2024",
+        engine: "2.0L",
+        transmission: "Automatic",
+        mileage: "8,200 km"
+      },
+
+      "bmw-330e-2022": {
+        brand: "BMW",
+        model: "330e M Sport",
+        year: "2022",
+        engine: "2.0L Hybrid",
+        transmission: "Automatic",
+        mileage: "32,500 km"
+      },
+
+      "mercedes-glc-2024": {
+        brand: "Mercedes-Benz",
+        model: "GLC 220d AMG",
+        year: "2024",
+        engine: "2.0L",
+        transmission: "Automatic",
+        mileage: "6,800 km"
+      }
+
+    };
+
+
+    /*
+     * Toast
+     */
+
+    function showToast(message) {
+
+      const toast = document.getElementById("toast");
+
+      toast.textContent = message;
+      toast.classList.add("show");
+
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 2500);
+
+    }
+
+
+    /*
+     * Favorite buttons
+     */
+
+    document
+      .querySelectorAll(".favorite-button")
+      .forEach(button => {
+
+        button.addEventListener("click", () => {
+
+          if (button.textContent.trim() === "♡") {
+
+            button.textContent = "♥";
+
+            showToast("Vehicle added to favorites.");
+
+          } else {
+
+            button.textContent = "♡";
+
+            showToast("Vehicle removed from favorites.");
+
+          }
+
+        });
+
+      });
+
+
+    /*
+     * Vehicle details
+     */
+
+    document
+      .querySelectorAll(".details-button")
+      .forEach(button => {
+
+        button.addEventListener("click", () => {
+
+          const vehicleId =
+            button.dataset.vehicle;
+
+          const vehicle =
+            vehicles[vehicleId];
+
+          if (!vehicle) {
+            return;
+          }
+
+          document.getElementById("modal-title")
+            .textContent =
+            `${vehicle.brand} ${vehicle.model}`;
+
+          document.getElementById("modal-brand")
+            .textContent =
+            vehicle.brand;
+
+          document.getElementById("modal-model")
+            .textContent =
+            vehicle.model;
+
+          document.getElementById("modal-year")
+            .textContent =
+            vehicle.year;
+
+          document.getElementById("modal-engine")
+            .textContent =
+            vehicle.engine;
+
+          document.getElementById("modal-transmission")
+            .textContent =
+            vehicle.transmission;
+
+          document.getElementById("modal-mileage")
+            .textContent =
+            vehicle.mileage;
+
+          document
+            .getElementById("vehicle-modal")
+            .classList.add("active");
+
+        });
+
+      });
+
+
+    /*
+     * Close modal
+     */
+
+    document
+      .getElementById("close-modal")
+      .addEventListener("click", () => {
+
+        document
+          .getElementById("vehicle-modal")
+          .classList.remove("active");
+
+      });
+
+
+    /*
+     * Close modal when clicking overlay
+     */
+
+    document
+      .getElementById("vehicle-modal")
+      .addEventListener("click", event => {
+
+        if (
+          event.target.id === "vehicle-modal"
+        ) {
+
+          event.currentTarget
+            .classList.remove("active");
+
+        }
+
+      });
+
+
+    /*
+     * Search
+     */
+
+    document
+      .getElementById("search-button")
+      .addEventListener("click", () => {
+
+        const searchValue =
+          document
+            .getElementById("search-input")
+            .value
+            .trim()
+            .toLowerCase();
+
+        const brand =
+          document
+            .getElementById("brand-select")
+            .value;
+
+        const year =
+          document
+            .getElementById("year-select")
+            .value;
+
+        const transmission =
+          document
+            .getElementById("transmission-select")
+            .value;
+
+        let visibleCount = 0;
+
+        document
+          .querySelectorAll(".vehicle-card")
+          .forEach(card => {
+
+            const cardBrand =
+              card.dataset.brand;
+
+            const cardYear =
+              card.dataset.year;
+
+            const cardTransmission =
+              card.dataset.transmission;
+
+            const title =
+              card
+                .querySelector(".vehicle-title")
+                .textContent
+                .toLowerCase();
+
+            const matchesSearch =
+              !searchValue ||
+              title.includes(searchValue) ||
+              cardBrand.toLowerCase().includes(searchValue);
+
+            const matchesBrand =
+              brand === "all" ||
+              cardBrand === brand;
+
+            const matchesYear =
+              year === "all" ||
+              cardYear === year;
+
+            const matchesTransmission =
+              transmission === "all" ||
+              cardTransmission === transmission;
+
+            const visible =
+              matchesSearch &&
+              matchesBrand &&
+              matchesYear &&
+              matchesTransmission;
+
+            card.style.display =
+              visible ? "" : "none";
+
+            if (visible) {
+              visibleCount++;
+            }
+
+          });
+
+        document
+          .getElementById("result-count")
+          .textContent =
+          `${visibleCount} vehicles found`;
+
+      });
+
+
+    /*
+     * Sorting
+     */
+
+    document
+      .getElementById("sort-select")
+      .addEventListener("change", event => {
+
+        const value =
+          event.target.value;
+
+        const grid =
+          document.getElementById("vehicle-grid");
+
+        const cards =
+          Array.from(
+            grid.querySelectorAll(".vehicle-card")
+          );
+
+        if (value === "price-low") {
+
+          cards.sort(
+            (a, b) =>
+              Number(a.dataset.price) -
+              Number(b.dataset.price)
+          );
+
+        }
+
+        if (value === "price-high") {
+
+          cards.sort(
+            (a, b) =>
+              Number(b.dataset.price) -
+              Number(a.dataset.price)
+          );
+
+        }
+
+        if (value === "year-new") {
+
+          cards.sort(
+            (a, b) =>
+              Number(b.dataset.year) -
+              Number(a.dataset.year)
+          );
+
+        }
+
+        cards.forEach(card => {
+          grid.appendChild(card);
+        });
+
+      });
+
+
+    /*
+     * Pagination
+     */
+
+    document
+      .querySelectorAll(".page-button[data-page]")
+      .forEach(button => {
+
+        button.addEventListener("click", () => {
+
+          document
+            .querySelectorAll(".page-button")
+            .forEach(page => {
+
+              page.classList.remove("active");
+
+            });
+
+          button.classList.add("active");
+
+          showToast(
+            `Page ${button.dataset.page} selected.`
+          );
+
+        });
+
+      });
+
+
+    /*
+     * Notification
+     */
+
+    document
+      .getElementById("notifications-button")
+      .addEventListener("click", () => {
+
+        showToast(
+          "You have 3 new vehicle recommendations."
+        );
+
+      });
+
+  </script>
+
+</body>
+</html>

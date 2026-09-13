@@ -2,7 +2,7 @@
 
 > Exploring MCP-powered test automation with Cypress, Playwright, and self-healing locators.
 
-![MCP Cypress Self-Healing Demo](docs/images/demo.png)
+
 
 ## What is this?
 
@@ -91,25 +91,16 @@ cd cypress-project
 npx cypress open
 ```
 
-## Current Status
+## Status
 
 This is an **experimental proof of concept**.
 
 The current locator healing logic is deterministic. The goal is to establish the MCP-based architecture first and gradually introduce more intelligent reasoning.
 
-## Next Steps
-
-* Improve generic locator healing
-* Add test-intent and semantic matching
-* Experiment with AI-assisted locator decisions
 
 ## Why?
 
-This project is part of my exploration into:
 
 **AI-driven Quality Engineering · Test Automation · MCP · Self-Healing Tests**
 
 ---
-
-**Hızır Yılmaz**
-Software Test Automation Engineer
